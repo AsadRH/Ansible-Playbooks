@@ -1,0 +1,6 @@
+---
+- hosts: virtualhosts
+  sudo: no
+  tasks:
+    - name: install httpd
+      yum: name=httpd update_cache=yes state=latest
