@@ -1,0 +1,26 @@
+---
+- hosts: solr-slave
+  tasks:
+    - name: installing JAVA
+      become: true
+      yum:
+       name: java-1.8.0-openjdk
+       state: present
+
+    - name: checking java path
+      become: true
+      shell: update-alternatives --display java | sed -n '4 p' | cut -c13-
+      register: javapath
+
+    - set_fact:
+       outputcmd={{ javapath.stdout }}
+
+    - debug: var=outputcmd
+
+    - name: Setting JAVA_HOME
+      become: true
+      shell: echo "export JAVA_HOME={{ outputcmd }}">> /etc/environment;
+
+    - name: Load JAVA PATH
+      shell: source /etc/environment
+
