@@ -1,5 +1,5 @@
 ---
-- hosts: solr-slave
+- hosts: your-node
   tasks:
     - name: installing JAVA
       become: true
